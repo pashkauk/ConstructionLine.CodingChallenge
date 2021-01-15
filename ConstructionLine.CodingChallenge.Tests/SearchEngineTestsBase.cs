@@ -31,13 +31,13 @@ namespace ConstructionLine.CodingChallenge.Tests
         protected static void AssertSizeCounts(List<Shirt> shirts, SearchOptions searchOptions, List<SizeCount> sizeCounts)
         {
             Assert.That(sizeCounts, Is.Not.Null);
-
+            var result = shirts.Where(x => searchOptions.Sizes.Any(s => s.Id == x.Size.Id) && searchOptions.Colors.Any(c => c.Id == x.Color.Id)).ToList();
             foreach (var size in Size.All)
             {
                 var sizeCount = sizeCounts.SingleOrDefault(s => s.Size.Id == size.Id);
                 Assert.That(sizeCount, Is.Not.Null, $"Size count for '{size.Name}' not found in results");
 
-                var expectedSizeCount = shirts
+                var expectedSizeCount = result
                     .Count(s => s.Size.Id == size.Id
                                 && (!searchOptions.Colors.Any() || searchOptions.Colors.Select(c => c.Id).Contains(s.Color.Id)));
 
@@ -50,13 +50,13 @@ namespace ConstructionLine.CodingChallenge.Tests
         protected static void AssertColorCounts(List<Shirt> shirts, SearchOptions searchOptions, List<ColorCount> colorCounts)
         {
             Assert.That(colorCounts, Is.Not.Null);
-            
+            var result = shirts.Where(x => searchOptions.Sizes.Any(s => s.Id == x.Size.Id) && searchOptions.Colors.Any(c => c.Id == x.Color.Id)).ToList();
             foreach (var color in Color.All)
             {
                 var colorCount = colorCounts.SingleOrDefault(s => s.Color.Id == color.Id);
                 Assert.That(colorCount, Is.Not.Null, $"Color count for '{color.Name}' not found in results");
 
-                var expectedColorCount = shirts
+                var expectedColorCount = result
                     .Count(c => c.Color.Id == color.Id  
                                 && (!searchOptions.Sizes.Any() || searchOptions.Sizes.Select(s => s.Id).Contains(c.Size.Id)));
 

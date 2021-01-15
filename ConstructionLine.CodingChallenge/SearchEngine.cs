@@ -25,7 +25,7 @@ namespace ConstructionLine.CodingChallenge
                 colors.Add(new ColorCount
                 {
                     Color = color,
-                    Count = _shirts.Count(c => c.Color.Id == color.Id
+                    Count = result.Count(c => c.Color.Id == color.Id
                       && (!options.Sizes.Any() || options.Sizes.Select(s => s.Id).Contains(c.Size.Id)))
                 });
             };
@@ -35,7 +35,7 @@ namespace ConstructionLine.CodingChallenge
                 sizes.Add(new SizeCount
                 {
                     Size = size,
-                    Count = _shirts.Count(s => s.Size.Id == size.Id
+                    Count = result.Count(s => s.Size.Id == size.Id
                                 && (!options.Colors.Any() || options.Colors.Select(c => c.Id).Contains(s.Color.Id)))
                 });
             };
